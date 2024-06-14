@@ -4,12 +4,12 @@ import { LoginDto, RegisterDto } from './dto';
 import { Response, Request } from 'express';
 import { BadRequestException } from '@nestjs/common';
 import { LoginResponse, RegisterResponse } from './auth.type';
-import { UserType } from 'src/user/user.type';
+import { User } from 'src/user/user.type';
 
-@Resolver(() => UserType)
+@Resolver(() => User)
 export class AuthResolver {
     constructor(private AuthService: AuthService) { }
-    @Mutation(returns=> RegisterResponse)
+    @Mutation(returns => RegisterResponse)
     async register(
         @Args('registerDto') registerDto: RegisterDto,
         @Context() context: { res: Response }

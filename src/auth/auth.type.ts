@@ -1,14 +1,14 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { UserType } from 'src/user/user.type';
+import { User } from 'src/user/user.type';
 
 @ObjectType()
 export class RegisterResponse {
-    @Field(() => UserType, { nullable: true })
-    user?: UserType;
+    @Field(() => User, { nullable: true })
+    user?: User;
 }
 
 @ObjectType()
 export class LoginResponse {
-    @Field(() => UserType)
-    user: UserType;
+    @Field(() => User)
+    user: User;
 }
