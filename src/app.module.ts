@@ -53,6 +53,7 @@ import { UserModule } from './user/user.module';
 import { LiveChatRoomModule } from './live-chat-room/live-chat-room.module';
 import { ChatRoomModule } from './chat-room/chat-room.module';
 import { User } from './user/user.entity';
+import { UploadScalar } from './user/file-upload.scalar';
 
 @Module({
   imports: [
@@ -78,5 +79,6 @@ import { User } from './user/user.entity';
     LiveChatRoomModule,
     ChatRoomModule,
   ],
+  providers : [UploadScalar],
 })
 export class AppModule {}

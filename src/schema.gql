@@ -25,6 +25,9 @@ type LoginResponse {
   user: User!
 }
 
+"""Upload custom scalar type"""
+scalar Upload
+
 type Query {
   hello: String!
 }
@@ -34,6 +37,7 @@ type Mutation {
   login(loginDto: LoginDto!): LoginResponse!
   logout: String!
   refreshToken: String!
+  UpdateProfile(fullName: String!, avatarUrl: Upload!): User!
 }
 
 input RegisterDto {
