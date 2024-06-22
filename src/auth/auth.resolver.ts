@@ -14,6 +14,7 @@ export class AuthResolver {
         @Args('registerDto') registerDto: RegisterDto,
         @Context() context: { res: Response }
     ) {
+        console.log('Received registerDto:', registerDto);  // Add this line
         if (registerDto.password !== registerDto.confirmPassword) {
             throw new BadRequestException('password ans confirm password are not the same ')
         }
@@ -31,8 +32,10 @@ export class AuthResolver {
     @Mutation(returns => String)
     async logout(
         @Context() context: { res: Response }
-    ) {
-        return await this.AuthService.logout(context.res);
+    ): Promise<string> {
+        const { res } = context;
+        const { message } = await this.AuthService.logout(res);
+        return message;
     }
     @Mutation(returns => String)
     async refreshToken(

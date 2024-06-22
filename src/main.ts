@@ -28,11 +28,13 @@ async function bootstrap() {
       whitelist: true,
       transform: true,
       exceptionFactory: (errors) => {
-        const formattedErrors = errors.reduce((accumulator, error) => {
-          accumulator[error.property] = Object.values(error.constraints).join(', ');
-          return accumulator;
-        }, {});
-        throw new BadRequestException(formattedErrors);
+        // const formattedErrors = errors.reduce((accumulator, error) => {
+        //   accumulator[error.property] = Object.values(error.constraints).join(', ');
+        //   return accumulator;
+        // }, {});
+        console.error(errors);  // Log errors directly
+        throw new BadRequestException(errors);
+        // throw new BadRequestException(formattedErrors);
       },
     }),
   );
