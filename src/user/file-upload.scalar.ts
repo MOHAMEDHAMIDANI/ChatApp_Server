@@ -7,11 +7,11 @@ export class UploadScalar implements CustomScalar<any, any> {
     description = 'Upload custom scalar type';
 
     parseValue(value: any): Promise<FileUpload> {
-        return value; // value from the client (variables)
+        return value;
     }
 
     serialize(value: any): any {
-        return value; // value sent to the client
+        return value;
     }
 
     parseLiteral(ast: ValueNode): any {

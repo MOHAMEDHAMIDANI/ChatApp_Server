@@ -2,10 +2,11 @@ import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { AuthService } from './auth.service';
 import { LoginDto, RegisterDto } from './dto';
 import { Response, Request } from 'express';
-import { BadRequestException } from '@nestjs/common';
+import { BadRequestException, UseFilters } from '@nestjs/common';
 import { LoginResponse, RegisterResponse } from './auth.type';
 import { User } from 'src/user/user.type';
-
+import { GraphQLErrorFilter } from 'src/filters/custom-exception.filter';
+@UseFilters(GraphQLErrorFilter)
 @Resolver(() => User)
 export class AuthResolver {
     constructor(private AuthService: AuthService) { }
@@ -14,7 +15,7 @@ export class AuthResolver {
         @Args('registerDto') registerDto: RegisterDto,
         @Context() context: { res: Response }
     ) {
-        console.log('Received registerDto:', registerDto);  // Add this line
+        console.log('Received registerDto:', registerDto);
         if (registerDto.password !== registerDto.confirmPassword) {
             throw new BadRequestException('password ans confirm password are not the same ')
         }

@@ -18,8 +18,6 @@ async function bootstrap() {
     methods: ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS'],
   });
   app.use(cookieParser());
-
-  // Use dynamic import for graphql-upload-minimal
   const { graphqlUploadExpress } = await import('graphql-upload-minimal');
   app.use(graphqlUploadExpress({ maxFileSize: 10000000, maxFiles: 5 }));
 
@@ -28,13 +26,11 @@ async function bootstrap() {
       whitelist: true,
       transform: true,
       exceptionFactory: (errors) => {
-        // const formattedErrors = errors.reduce((accumulator, error) => {
-        //   accumulator[error.property] = Object.values(error.constraints).join(', ');
-        //   return accumulator;
-        // }, {});
-        console.error(errors);  // Log errors directly
-        throw new BadRequestException(errors);
-        // throw new BadRequestException(formattedErrors);
+        const formattedErrors = errors.reduce((accumulator, error) => {
+          accumulator[error.property] = Object.values(error.constraints).join(', ');
+          return accumulator;
+        }, {});
+        throw new BadRequestException(formattedErrors);
       },
     }),
   );
