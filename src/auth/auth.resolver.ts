@@ -28,7 +28,8 @@ export class AuthResolver {
         @Args('loginDto') loginDto: LoginDto,
         @Context() context: { res: Response }
     ) {
-        return await this.AuthService.login(loginDto, context.res);
+        const result = await this.AuthService.login(loginDto, context.res);
+        return { user: result };
     }
     @Mutation(returns => String)
     async logout(
