@@ -7,6 +7,7 @@ import { User } from 'src/user/user.entity';
 import { Repository } from 'typeorm';
 import { LoginDto, RegisterDto } from './dto';
 import * as  bcrypt from 'bcrypt';
+import { v4 as uuid } from 'uuid';
 @Injectable()
 export class AuthService {
     constructor(
@@ -96,6 +97,9 @@ export class AuthService {
         const salt = await bcrypt.genSalt()
         const hashedPassword = await bcrypt.hash(RegisterDto.password, salt)
         const newUser = await this.UserRepository.create({
+            id : uuid(),
+            createdAt : new Date(),
+            updatedAt : new Date(),
             fullName: RegisterDto.fullName,
             email: RegisterDto.email,
             password: hashedPassword

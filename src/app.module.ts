@@ -12,6 +12,7 @@ import { User } from './user/user.entity';
 import { UploadScalar } from './user/file-upload.scalar';
 import { RedisPubSub } from 'graphql-redis-subscriptions';
 import { TokenService } from './token/token.service';
+import { ServeStaticModule } from '@nestjs/serve-static';
 
 const pubSub = new RedisPubSub({
   connection: {
@@ -25,6 +26,10 @@ const pubSub = new RedisPubSub({
 
 @Module({
   imports: [
+    ServeStaticModule.forRoot({
+      renderPath : join(__dirname, '..' , "public"),
+      serveRoot : '/',
+    }),
     TypeOrmModule.forRoot({
       type: 'mongodb',
       url: 'mongodb://localhost:27017/ChatApp',

@@ -8,8 +8,12 @@ import { UploadScalar } from './file-upload.scalar'; // import custom scalar
 import * as v4 from 'uuid'
 import {join} from 'path';
 import { createWriteStream } from 'fs';
+import { UserService } from './user.service';
 @Resolver()
 export class UserResolver {
+    constructor(private userService: UserService){
+
+    }
     @UseGuards(GraphqlAuthGuard)
     @Mutation(() => User)
     async UpdateProfile(
@@ -25,6 +29,7 @@ export class UserResolver {
         }
         const userId = context.req.user.sub;
         const avatarUrl = file ? await this.storeImgAndReturnUrl(file) : null;
+        return await this.userService.updateProfile(userId, fullName, avatarUrl);
     }
 
 
