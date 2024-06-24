@@ -2,7 +2,8 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
-
+import fs from 'fs';
+import { join } from 'path';
 @Injectable()
 export class UserService {
     constructor(
@@ -15,6 +16,13 @@ export class UserService {
         const user = await this.userRepository.findOneBy({ id: userId });
         if (!user) {
             throw new NotFoundException(`User with ID ${userId} not found`);
+        }
+        if(user.avatarUrl){
+            const imageName = user.avatarUrl.split('/').pop();
+            const imagePath = join(__dirname, ".." , ".." , 'public/images', imageName);
+            if(fs.existsSync(imagePath)){
+                fs.unlinkSync(imagePath)
+            }
         }
         if (avatarUrl !== undefined) {
             user.avatarUrl = avatarUrl;
