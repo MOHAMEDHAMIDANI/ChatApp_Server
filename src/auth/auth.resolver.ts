@@ -50,7 +50,7 @@ export class AuthResolver {
         }
     }
     @Query(returns => String)
-    async hello() {
+    async sayhello() {
         return 'hello';
     }
 }

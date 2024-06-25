@@ -6,12 +6,12 @@ import { Request } from 'express';
 import { FileUpload } from 'graphql-upload-minimal';
 import { UploadScalar } from './file-upload.scalar'; // import custom scalar
 import * as v4 from 'uuid'
-import {join} from 'path';
+import { join } from 'path';
 import { createWriteStream } from 'fs';
 import { UserService } from './user.service';
 @Resolver()
 export class UserResolver {
-    constructor(private userService: UserService){
+    constructor(private userService: UserService) {
 
     }
     @UseGuards(GraphqlAuthGuard)
@@ -31,10 +31,14 @@ export class UserResolver {
         const avatarUrl = file ? await this.storeImgAndReturnUrl(file) : null;
         return await this.userService.updateProfile(userId, fullName, avatarUrl);
     }
+    @UseGuards(GraphqlAuthGuard)
+    @Mutation(() => String)
+    hello(){
+        return 'Hello from the dark side of hell '
+    }
 
-
-    private async storeImgAndReturnUrl(file : FileUpload){
-        const { createReadStream , filename} = await file ;
+    private async storeImgAndReturnUrl(file: FileUpload) {
+        const { createReadStream, filename } = await file;
         const uniqueFilename = `${v4()}_${filename}`
         const imagePath = join(process.cwd(), 'public/images', uniqueFilename)
         const imageUrl = `${process.env.APP_URL}/${uniqueFilename}`

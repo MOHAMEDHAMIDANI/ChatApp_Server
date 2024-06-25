@@ -29,7 +29,7 @@ type LoginResponse {
 scalar Upload
 
 type Query {
-  hello: String!
+  sayhello: String!
 }
 
 type Mutation {
@@ -38,6 +38,7 @@ type Mutation {
   logout: String!
   refreshToken: String!
   UpdateProfile(fullName: String!, avatarUrl: Upload!): User!
+  hello: String!
 }
 
 input RegisterDto {
