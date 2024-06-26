@@ -1,4 +1,4 @@
-import { Column, Entity, ObjectIdColumn, PrimaryGeneratedColumn, } from 'typeorm';
+import { Column, CreateDateColumn, Entity, ObjectIdColumn, PrimaryGeneratedColumn, UpdateDateColumn, } from 'typeorm';
 
 @Entity()
 export class User {
@@ -19,10 +19,10 @@ export class User {
     @Column({ nullable: true })
     password?: string;
 
-    @Column({ nullable: true })
+    @CreateDateColumn({ nullable: true })
     createdAt?: Date;
 
-    @Column({ nullable: true })
+    @UpdateDateColumn({ nullable: true })
     updatedAt?: Date;
 }
 
