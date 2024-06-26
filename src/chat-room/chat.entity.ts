@@ -23,5 +23,5 @@ export class Chatroom {
     users?: string[];
 
     @Column() // array of message IDs
-    messages?: String[];
+    messages?: string[];
 }

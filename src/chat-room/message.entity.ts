@@ -4,10 +4,10 @@ import { Column, CreateDateColumn, Entity, ObjectIdColumn, PrimaryGeneratedColum
 export class Message {
 
     @ObjectIdColumn()
-    _id: String;
+    _id: string;
 
     @PrimaryGeneratedColumn("uuid")
-    id: String;
+    id: string;
 
     @Column({ nullable: true })
     imageUrl?: string;
@@ -22,8 +22,8 @@ export class Message {
     updatedAt?: Date;
 
     @Column()
-    chatroom?: String;
+    chatroom?: string;
 
     @Column()
-    user?: String;
+    user?: string;
 }

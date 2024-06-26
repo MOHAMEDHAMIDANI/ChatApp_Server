@@ -25,11 +25,32 @@ type LoginResponse {
   user: User!
 }
 
+type Chatroom {
+  id: ID
+  name: String
+  createdAt: DateTime
+  updatedAt: DateTime
+  users: [User!]
+  messages: [Message!]
+}
+
+type Message {
+  id: ID
+  imageUrl: String
+  content: String
+  createdAt: DateTime
+  updatedAt: DateTime
+  chatroom: Chatroom
+  user: User
+}
+
 """Upload custom scalar type"""
 scalar Upload
 
 type Query {
   sayhello: String!
+  getMessagesForChatroom(chatroomId: String!): [Message!]!
+  getChatRoomsForUser(userId: String!): [Chatroom!]!
 }
 
 type Mutation {
