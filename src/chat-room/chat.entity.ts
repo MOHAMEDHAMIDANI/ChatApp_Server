@@ -4,7 +4,7 @@ import { Column, CreateDateColumn, ObjectIdColumn, PrimaryGeneratedColumn, Updat
 
 @ObjectType()
 export class Chatroom {
-    @ObjectIdColumn('uuid')
+    @ObjectIdColumn()
     _id: string;
 
     @PrimaryGeneratedColumn('uuid')

@@ -12,6 +12,6 @@ import { JwtModule } from '@nestjs/jwt';
     forwardRef(() => AuthModule),
   ],
   providers: [UserService, UserResolver],
-  exports: [UserService],
+  exports: [],
 })
 export class UserModule {}

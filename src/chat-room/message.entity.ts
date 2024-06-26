@@ -3,7 +3,7 @@ import { Column, CreateDateColumn, Entity, ObjectIdColumn, PrimaryGeneratedColum
 @Entity()
 export class Message {
 
-    @ObjectIdColumn("uuid")
+    @ObjectIdColumn()
     _id: String;
 
     @PrimaryGeneratedColumn("uuid")

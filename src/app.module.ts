@@ -13,6 +13,8 @@ import { UploadScalar } from './user/file-upload.scalar';
 import { RedisPubSub } from 'graphql-redis-subscriptions';
 import { TokenService } from './token/token.service';
 import { ServeStaticModule } from '@nestjs/serve-static';
+import { Message } from './chat-room/message.entity';
+import { Chatroom } from './chat-room/chat.entity';
 
 const pubSub = new RedisPubSub({
   connection: {
@@ -35,7 +37,7 @@ const pubSub = new RedisPubSub({
       url: 'mongodb://localhost:27017/ChatApp',
       useUnifiedTopology: true,
       synchronize: true,
-      entities: [User],
+      entities: [User , Message , Chatroom],
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
