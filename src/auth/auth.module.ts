@@ -6,10 +6,12 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from '../user/user.entity';
+import { Chatroom } from 'src/chat-room/chat.entity';
+import { Message } from 'src/chat-room/message.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([User , Chatroom , Message]),
     forwardRef(() => UserModule),
     JwtModule.registerAsync({
       imports: [ConfigModule],

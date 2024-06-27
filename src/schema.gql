@@ -60,6 +60,8 @@ type Mutation {
   refreshToken: String!
   UpdateProfile(fullName: String!, avatarUrl: Upload!): User!
   hello: String!
+  createChatroom(name: String!): Chatroom!
+  addUsersToChatroom(chatroomId: String!, userIds: [String!]!): Chatroom!
 }
 
 input RegisterDto {

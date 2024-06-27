@@ -1,12 +1,11 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { Repository } from 'typeorm';
 import { Chatroom } from './chat.entity';
-import { InjectRepository } from '@nestjs/typeorm';
 import { Message } from './message.entity';
 import { ConfigService } from '@nestjs/config';
 import { v4 as uuid } from 'uuid';
 import { createWriteStream } from 'fs';
-
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 @Injectable()
 export class ChatRoomService {
     constructor(@InjectRepository(Chatroom) private chatroomRepository: Repository<Chatroom>,
@@ -28,31 +27,41 @@ export class ChatRoomService {
         return chatroom;
     }
     async createChatroomWithUsers(
-        userIds: string[],
+        userIds?: string[],
+        name?: string,
     ) {
         const chatroom = await this.chatroomRepository.create({
             id: uuid(),
+            messages : [],
+            name: name,
             users: userIds
         })
         return await this.chatroomRepository.save(chatroom);
     }
     // feature for the future 
-    // async addUsersToChatroom(){
-
-    // }
-    async getChatRoomsForUser(userId: string) : Promise<Chatroom[]>{
-        // const chatRooms = await this.chatroomRepository
-        //     .createQueryBuilder('chatroom')
-        //     .where('chatroom.users @> :userId', { userId: [userId] })
-        //     .getMany();
-        // return chatRooms;
-        const chatRooms = await this.chatroomRepository.find({
+    async addUsersToChatroom(chatroomId: string, userIds: string[]) {
+        const existingChatroom = await this.chatroomRepository.findOne({
             where: {
-                users: userId
-            }
-        })
+                id: chatroomId,
+            },
+        });
+        if (!existingChatroom) {
+            throw new BadRequestException({ chatroomId: 'Chatroom does not exist' });
+        }
+
+        existingChatroom.users = [...existingChatroom.users, ...userIds];
+        await this.chatroomRepository.save(existingChatroom)
+        return existingChatroom;
+    }
+
+    async getChatRoomsForUser(userId: string): Promise<Chatroom[]> {
+        const chatRooms = await this.chatroomRepository
+            .createQueryBuilder('chatroom')
+            .where('chatroom.users @> :userId', { userId: [userId] })
+            .getMany();
         return chatRooms;
     }
+
     async sendMessage(chatroomId: string,
         message: string,
         userId: string,

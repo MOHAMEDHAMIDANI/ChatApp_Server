@@ -1,8 +1,8 @@
 import { Field, ObjectType, ID } from '@nestjs/graphql';
 import { User } from 'src/user/user.type';
-import { Column, CreateDateColumn, ObjectIdColumn, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, ObjectIdColumn, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
-@ObjectType()
+@Entity()
 export class Chatroom {
     @ObjectIdColumn()
     _id: string;

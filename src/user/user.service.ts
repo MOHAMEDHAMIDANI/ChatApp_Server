@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { User } from './user.entity';
 import fs from 'fs';
 import { join } from 'path';
@@ -32,5 +32,15 @@ export class UserService {
         }
         await this.userRepository.save(user);
         return user;
+    }
+    async getUsersById(userIds : string[]) {
+        const user = await this.userRepository.find({where : {
+            id : In(userIds),
+        }});
+        if (!user) {
+            throw new NotFoundException(`User not found`);
+        }
+        return user;
+        
     }
 }
