@@ -60,7 +60,10 @@ type Mutation {
   refreshToken: String!
   UpdateProfile(fullName: String!, avatarUrl: Upload!): User!
   hello: String!
-  createChatroom(name: String!): Chatroom!
+  userStartedTypingMutation(chatroomId: String!): User!
+  userStoppedTypingMutation(chatroomId: String!): User!
+  sendMessage(chatroomId: String!, content: String!, image: Upload!): Message!
+  createChatroom(name: String!, usernames: [String!]!): Chatroom!
   addUsersToChatroom(chatroomId: String!, userIds: [String!]!): Chatroom!
 }
 
@@ -74,4 +77,10 @@ input RegisterDto {
 input LoginDto {
   email: String!
   password: String!
+}
+
+type Subscription {
+  newMessage(chatroomId: Float!): Message
+  userStartedTyping(chatroomId: String!, userId: String!): User
+  userStoppedTyping(chatroomId: String!, userId: String!): User
 }
